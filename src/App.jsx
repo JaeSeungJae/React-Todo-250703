@@ -10,6 +10,9 @@ function App() {
     }
     e.target[0].value = ''
   }
+  const deleteTodo = (index) => {
+    setTodos((prevTodos) => prevTodos.filter((_, i) => i !== index))
+  }
   return (
     <>
       <form onSubmit={handleOnSubmit}>
@@ -18,7 +21,15 @@ function App() {
       </form>
       <ul>
         {todos.map((todo, index) => (
-          <li key={index}>{todo}</li>
+          <li key={index}>
+            {todo}
+            <button
+              style={{ marginLeft: '10px' }}
+              onClick={() => deleteTodo(index)}
+            >
+              X
+            </button>
+          </li>
         ))}
       </ul>
     </>
