@@ -36,7 +36,13 @@ function App() {
       </form>
       <ul>
         {todos.map((todo, index) => (
-          <li style={{ padding: '10px' }} key={index}>
+          <li
+            style={{
+              padding: '10px',
+              textDecoration: todo.checked ? 'line-through' : 'none',
+            }}
+            key={index}
+          >
             <input
               type="checkbox"
               checked={todo.checked}
