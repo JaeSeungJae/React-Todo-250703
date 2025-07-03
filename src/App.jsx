@@ -6,8 +6,10 @@ function App() {
       .then((res) => res.json())
       .then((res) => setTodos(res.todos))
   }, []) // 초기 렌더링 시 더미 JSON API에서 todos를 가져와서 상태에 저장
+
   const [todos, setTodos] = useState([])
   // useState를 사용하여 todos 상태를 관리
+
   const handleOnSubmit = (e) => {
     e.preventDefault()
     const newTodo = e.target[0].value.trim()
@@ -16,12 +18,25 @@ function App() {
         { todo: newTodo, completed: false },
         ...prevTodos,
       ])
+      fetch('https://dummyjson.com/todos/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          todo: newTodo,
+          completed: false,
+          userId: 5,
+        }),
+      })
+        .then((res) => res.json())
+        .then((res) => console.log(res))
     }
     e.target[0].value = ''
   }
+
   const deleteTodo = (index) => {
     setTodos((prevTodos) => prevTodos.filter((_, i) => i !== index))
   }
+
   const handleCheck = (index) => {
     setTodos((prevTodos) =>
       prevTodos.map(
@@ -38,6 +53,7 @@ function App() {
         <input type="text" name="todo" placeholder="" />
         <button type="submit">등록</button>
       </form>
+
       <ul>
         {todos.map((todo, index) => (
           <li
