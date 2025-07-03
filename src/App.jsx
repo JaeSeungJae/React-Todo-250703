@@ -1,18 +1,21 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 function App() {
-  const [todos, setTodos] = useState([
-    { id: 3, text: '할일1', checked: true },
-    { id: 2, text: '할일2', checked: false },
-    { id: 1, text: '할일3', checked: false },
-  ])
-  // useState에서 객체를 넣어야 checkbox 값을 관리할 수 있을 것 같다.
-  // 따라서 기존의 todos 배열에서 checked 값을 묶어 객체로 변환.
+  useEffect(() => {
+    fetch('https://dummyjson.com/todos')
+      .then((res) => res.json())
+      .then((res) => setTodos(res.todos))
+  }, []) // 초기 렌더링 시 더미 JSON API에서 todos를 가져와서 상태에 저장
+  const [todos, setTodos] = useState([])
+  // useState를 사용하여 todos 상태를 관리
   const handleOnSubmit = (e) => {
     e.preventDefault()
     const newTodo = e.target[0].value.trim()
     if (newTodo) {
-      setTodos((prevTodos) => [{ text: newTodo, checked: false }, ...prevTodos])
+      setTodos((prevTodos) => [
+        { todo: newTodo, completed: false },
+        ...prevTodos,
+      ])
     }
     e.target[0].value = ''
   }
@@ -22,8 +25,9 @@ function App() {
   const handleCheck = (index) => {
     setTodos((prevTodos) =>
       prevTodos.map(
-        (todo, i) => (i === index ? { ...todo, checked: !todo.checked } : todo) // 이 함수로 체크박스 토글 관리
-        // i가 index와 같으면 checked 값을 반전시키고, 아니면 그대로 반환
+        (todo, i) =>
+          i === index ? { ...todo, completed: !todo.completed } : todo // 이 함수로 체크박스 토글 관리
+        // i가 index와 같으면 completed 값을 반전시키고, 아니면 그대로 반환
       )
     )
   }
@@ -39,17 +43,18 @@ function App() {
           <li
             style={{
               padding: '10px',
-              textDecoration: todo.checked ? 'line-through' : 'none',
+              textDecoration: todo.completed ? 'line-through' : 'none',
             }}
             key={index}
           >
             <input
               type="checkbox"
-              checked={todo.checked}
+              checked={todo.completed}
               style={{ marginRight: '10px' }}
               onChange={() => handleCheck(index)}
             />
-            {JSON.stringify(todo.checked)} / {index} / {todo.text}
+            {/* {JSON.stringify(todo.completed)} / {index} / */}
+            {todo.todo}
             <button
               style={{ marginLeft: '10px' }}
               onClick={() => deleteTodo(index)}
