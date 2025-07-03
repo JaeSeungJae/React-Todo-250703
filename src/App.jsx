@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 
 function App() {
   const [todos, setTodos] = useState([
-    { text: '할일1', checked: false },
-    { text: '할일2', checked: false },
-    { text: '할일3', checked: false },
+    { id: 3, text: '할일1', checked: true },
+    { id: 2, text: '할일2', checked: false },
+    { id: 1, text: '할일3', checked: false },
   ])
   // useState에서 객체를 넣어야 checkbox 값을 관리할 수 있을 것 같다.
   // 따라서 기존의 todos 배열에서 checked 값을 묶어 객체로 변환.
@@ -49,7 +49,7 @@ function App() {
               style={{ marginRight: '10px' }}
               onChange={() => handleCheck(index)}
             />
-            {todo.text}
+            {JSON.stringify(todo.checked)} / {index} / {todo.text}
             <button
               style={{ marginLeft: '10px' }}
               onClick={() => deleteTodo(index)}
