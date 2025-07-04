@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import TodoWriteForm from './components/TodoWriteForm'
+import TodoList from './components/TodoList'
 
 function App() {
   const lastId = useRef(4)
@@ -35,7 +36,7 @@ function App() {
   return (
     <>
       <TodoWriteForm handleOnSubmit={handleOnSubmit} />
-      <ul>
+      {/* <ul>
         {todos.map((todo) => (
           <li key={todo.id}>
             <input
@@ -49,7 +50,8 @@ function App() {
             <button onClick={() => removeTodo(todo.id)}>X</button>
           </li>
         ))}
-      </ul>
+      </ul> */}
+      <TodoList todos={todos} toggleTodo={toggleTodo} removeTodo={removeTodo} />
     </>
   )
 }
