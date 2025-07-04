@@ -1,18 +1,15 @@
+import TodoItem from './TodoItem'
+
 const TodoList = ({ todos, toggleTodo, removeTodo }) => {
   return (
     <ul>
       {todos.map((todo) => (
-        <li key={todo.id}>
-          <input
-            type="checkbox"
-            onChange={() => {
-              toggleTodo(todo.id)
-            }}
-            checked={todo.checked}
-          />
-          {JSON.stringify(todo.checked)} / {todo.id} / {todo.text}
-          <button onClick={() => removeTodo(todo.id)}>X</button>
-        </li>
+        <TodoItem
+          key={todo.id}
+          todo={todo}
+          onToggle={() => toggleTodo(todo.id)}
+          onRemove={() => removeTodo(todo.id)}
+        />
       ))}
     </ul>
   )
