@@ -1,12 +1,13 @@
-import { useRef, useState } from 'react'
+import React, { useState, useRef, createContext, useContext } from 'react'
+const TodoContext = createContext()
+// Context 영역 생성
 
-export default function useTodos(
-  initialTodos = [
+export function TodoProvider({ children }) {
+  const initialTodos = [
     { id: 3, text: '공부하기', checked: true },
     { id: 2, text: '코딩하기', checked: false },
     { id: 1, text: '운동하기', checked: true },
   ]
-) {
   const lastId = useRef(
     initialTodos.length > 0 ? Math.max(...initialTodos.map((t) => t.id)) + 1 : 1
   )
@@ -33,6 +34,17 @@ export default function useTodos(
       )
     )
   }
+  const value = {
+    todos,
+    handleOnSubmit,
+    removeTodo,
+    toggleTodo,
+  }
+  return <TodoContext.Provider value={value}>{children}</TodoContext.Provider>
+}
 
-  return { todos, handleOnSubmit, removeTodo, toggleTodo }
+export function useTodos() {
+  const context = useContext(TodoContext)
+
+  return context
 }

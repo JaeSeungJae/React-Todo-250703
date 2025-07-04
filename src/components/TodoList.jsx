@@ -1,6 +1,8 @@
 import TodoItem from './TodoItem'
+import { useTodos } from '../context/TodoContext.jsx'
 
-const TodoList = ({ todos, toggleTodo, removeTodo }) => {
+const TodoList = () => {
+  const { todos, toggleTodo, removeTodo } = useTodos()
   return (
     <ul>
       {todos.map((todo) => (

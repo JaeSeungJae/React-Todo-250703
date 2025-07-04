@@ -1,4 +1,7 @@
-function TodoWriteForm({ handleOnSubmit }) {
+import { useTodos } from '../context/TodoContext.jsx'
+
+function TodoWriteForm() {
+  const { handleOnSubmit } = useTodos()
   return (
     <>
       <form onSubmit={handleOnSubmit}>
